@@ -1,75 +1,43 @@
 COMPETITOR_PROMPT = """
-You are an experienced competitive intelligence researcher.
+You are a senior competitive intelligence analyst.
 
 Market Report:
 
 {market_report}
 
-Your job is to figure out who is actually winning in this market and why.
+External Research:
 
-Do not generate generic competitor profiles.
+{competitor_search_results}
 
-Rules:
+Your task is to identify REAL competitor companies operating in this market.
 
-* Base everything on evidence from the market report.
-* Avoid corporate jargon and consultant language.
-* Do not write generic strengths like "good customer service" or "strong brand presence" unless supported by evidence.
-* Focus on what competitors are actually doing.
-* Highlight positioning, pricing, distribution, product strategy, content strategy, customer targeting, partnerships, and growth tactics.
-* If information is uncertain, explicitly mention it.
-* Write naturally, like research notes prepared for a founder or operator.
-* Prefer observations over opinions.
+IMPORTANT:
 
-Return the report in this format:
+- Return actual company names.
+- Do NOT return categories.
+- Do NOT return labels such as:
+  - Cloud Providers
+  - Enterprise Vendors
+  - AI Startups
+  - Market Leaders
 
-# Competitors Worth Watching
+Return specific company names only.
 
-For each competitor:
+For each competitor identify:
 
-## Competitor Name
+- Company Name
+- Website
+- Main Strength
+- Main Weakness
+- Pricing Insight
 
-What they're doing:
+Focus on companies that are actively competing in this industry.
 
-* Specific observation
-* Specific observation
-* Specific observation
+Also identify:
 
-Why customers choose them:
+- common strengths across competitors
+- common weaknesses across competitors
+- pricing patterns in the market
 
-* Reason
-* Reason
-* Reason
-
-Weak spots:
-
-* Weakness
-* Limitation
-* Gap in offering
-
-Pricing Signals:
-
-* Pricing observation
-* Packaging observation
-* Upsell/cross-sell observation
-
-Strategic Notes:
-
-* Interesting move
-* Competitive advantage
-* Vulnerability
-
-# Patterns Across Competitors
-
-* Common positioning pattern
-* Common pricing pattern
-* Common acquisition strategy
-* Common weakness
-
-# Market Gaps
-
-* Gap competitors are ignoring
-* Underserved customer segment
-* Opportunity created by competitor weakness
-
-The output should feel like an analyst dissecting competitors after studying the market, not an AI generating SWOT analyses.
+Return structured data only.
 """
