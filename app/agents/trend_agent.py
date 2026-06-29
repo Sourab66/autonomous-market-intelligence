@@ -1,41 +1,71 @@
 from app.llm import llm
 from app.tools.tavily_tool import search_market
+from app.utils.llm_metrics import invoke_with_metrics
 
 
 def trend_agent(state):
 
     print("Running Trend Agent...")
 
-    search_results = search_market(
-        f"latest trends in {state['industry']} industry 2025"
+    research = search_market(
+        f"""
+        Latest trends in
+        {state['industry']}
+        industry
+        """
     )
 
     prompt = f"""
-    You are an industry research analyst.
+You are a Senior Industry Trend Analyst.
 
-    Industry:
-    {state['industry']}
+Industry
 
-    Latest Industry Research:
-    {search_results}
+{state['industry']}
 
-    Analyze the research and identify the 5 most important trends.
+Latest Research Summary
 
-    For each trend provide:
+{research["answer"]}
 
-    1. Trend Name
-    2. Why it matters
-    3. Business impact
+Research Sources
 
-    Use evidence from the research.
+{research["sources"]}
 
-    Avoid generic statements.
+Identify the five most important trends currently shaping this industry.
 
-    Return a professional trend analysis report.
-    """
+For every trend include:
 
-    response = llm.invoke(prompt)
+Trend Name
+
+Why it matters (2-3 lines)
+
+Business Impact (2-3 lines)
+
+Only use evidence from the supplied research.
+
+Avoid generic business advice.
+
+Write like a professional market analyst.
+"""
+
+    result = invoke_with_metrics(
+        llm,
+        prompt
+    )
+
+    response = result["response"]
 
     return {
-        "trend_report": response.content
+
+        "trend_report": response.content,
+
+        "trend_sources": research["sources"],
+
+        "trend_timestamp": research["timestamp"],
+
+        "trend_execution_time": result["execution_time"],
+
+        "trend_tokens": result["tokens"],
+
+        "trend_cost": result["cost"]
+
     }

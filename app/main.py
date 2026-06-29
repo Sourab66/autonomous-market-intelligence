@@ -1,4 +1,5 @@
 import time
+import uuid
 
 from app.graph.builder import graph
 
@@ -6,7 +7,7 @@ start = time.time()
 
 config = {
     "configurable": {
-        "thread_id": "user_1"
+        "thread_id": str(uuid.uuid4())
     }
 }
 

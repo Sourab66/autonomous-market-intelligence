@@ -5,39 +5,87 @@ Market Report:
 
 {market_report}
 
-External Research:
+Latest Competitor Research:
 
 {competitor_search_results}
 
+Research Sources:
+
+{sources}
+
 Your task is to identify REAL competitor companies operating in this market.
 
-IMPORTANT:
+IMPORTANT RULES
 
-- Return actual company names.
-- Do NOT return categories.
-- Do NOT return labels such as:
-  - Cloud Providers
-  - Enterprise Vendors
-  - AI Startups
-  - Market Leaders
+- Return REAL companies only.
+- Never return categories.
+- Never invent companies.
+- Use the supplied research as the primary source.
+- If a competitor is mentioned multiple times, merge the information.
+- Sort competitors from strongest to weakest market presence.
+- Return ONLY the top 8 competitors.
 
-Return specific company names only.
+For every competitor return:
 
-For each competitor identify:
+• Company Name
 
-- Company Name
-- Website
-- Main Strength
-- Main Weakness
-- Pricing Insight
+• Official Website
 
-Focus on companies that are actively competing in this industry.
+If the competitor is a well-known company (OpenAI, Microsoft, Google, IBM, Salesforce, HubSpot, UiPath, Anthropic, Oracle, SAP, ServiceNow, etc.), provide its official website even if it is not explicitly mentioned in the research.
 
-Also identify:
+If uncertain, write:
 
-- common strengths across competitors
-- common weaknesses across competitors
-- pricing patterns in the market
+Unknown
+
+• Short Description
+
+(1-2 concise sentences)
+
+• Main Strength
+
+(one clear strength)
+
+• Main Weakness
+
+If no reliable weakness is found, write exactly:
+
+No major publicly documented weakness found.
+
+Never write:
+
+- Not specified
+- Unknown weakness
+- N/A
+
+• Pricing
+
+If pricing information cannot be verified, write exactly:
+
+Unknown
+
+Never write:
+
+- Pricing not publicly available
+- Not specified
+- N/A
+
+--------------------------------------------
+
+After competitors, summarize:
+
+Overall Strengths
+
+- Bullet points only
+
+Overall Weaknesses
+
+- Bullet points only
+
+Pricing Insights
+
+- Bullet points only
+
+Keep the output concise.
 
 Return structured data only.
 """
