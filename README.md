@@ -1,211 +1,319 @@
-Streamlit UI Input and Output screenshots:
-
-<img width="1915" height="965" alt="image" src="https://github.com/user-attachments/assets/c98b42ce-94ee-4fb9-9144-fcca202a9618" />
-<img width="1916" height="965" alt="image" src="https://github.com/user-attachments/assets/20b20a5c-ecc3-4ac3-9405-cbda4f7ccaaa" />
-<img width="1917" height="962" alt="image" src="https://github.com/user-attachments/assets/52c83c86-aeba-498d-b095-167a02b956c7" />
-
-I also attached the pdf report named market_report.pdf and campaign_content.pdf outside readme. 
- 
-workFlow visualize:
-                          USER
-                            │
-                            ▼
-                    Streamlit UI
-                            │
-                            ▼
-                   LangGraph Workflow
-                            │
-                            ▼
-                    Market Agent
-                            │
-             ┌──────────────┴──────────────┐
-             ▼                             ▼
-     Competitor Agent              Trend Agent
-             │                             │
-             └──────────────┬──────────────┘
-                            ▼
-                    Strategy Agent
-                            │
-                            ▼
-                 Human Approval Layer
-                            │
-                 Yes ───────┴────── No
-                  │                 │
-                  ▼                 ▼
-             Content Agent        End
-                  │
-                  ▼
-       Campaign Content Generation
-                  │
-        ┌─────────┴─────────┐
-        ▼                   ▼
-   Report PDF         Campaign PDF
-        │                   │
-        └─────────┬─────────┘
-                  ▼
-           Download via UI
-
-
-
-
-Technology Architecture:
-
-User
- │
- ▼
-Streamlit UI
- │
- ▼
-LangGraph
- │
- ├── StateGraph
- │
- ├── MemorySaver
- │
- ├── Router
- │
- └── Agents
-        │
-        ├── Market Agent
-        ├── Competitor Agent
-        ├── Trend Agent
-        ├── Strategy Agent
-        ├── Approval Agent
-        └── Content Agent
-                │
-                ▼
-            Gemini LLM
-                │
-                ▼
-           Structured Output
-          (Pydantic Schemas)
-                │
-                ▼
-           Tavily Search API
-
-          
-
-Folder Architecture:
-
-autonomous-market-intelligence
-│
-├── app
-│   │
-│   ├── agents
-│   │   ├── market_agent.py
-│   │   ├── competitor_agent.py
-│   │   ├── trend_agent.py
-│   │   ├── strategy_agent.py
-│   │   ├── approval_agent.py
-│   │   └── content_agent.py
-│   │
-│   ├── prompts
-│   │   ├── market_prompt.py
-│   │   ├── competitor_prompt.py
-│   │   ├── strategy_prompt.py
-│   │   └── content_prompt.py
-│   │
-│   ├── schemas
-│   │   ├── market_schema.py
-│   │   ├── competitor_schema.py
-│   │   ├── strategy_schema.py
-│   │   └── content_schema.py
-│   │
-│   ├── graph
-│   │   ├── builder.py
-│   │   ├── state.py
-│   │   └── router.py
-│   │
-│   ├── tools
-│   │   └── tavily_tool.py
-│   │
-│   ├── report_pdf_generator.py
-│   ├── campaign_pdf_generator.py
-│   ├── content_only.py
-│   ├── memory.py
-│   ├── llm.py
-│   └── config.py
-│
-├── ui.py
-├── requirements.txt
-└── README.md
-
-
-
-1. Project Title
-   
 # Autonomous Market Intelligence Platform
 
-2. Project Description
-## Overview
+An enterprise-style **Multi-Agent AI Market Intelligence Platform** built using **LangGraph**, **FastAPI**, **Streamlit**, **Gemini 2.5 Flash**, and **Tavily Search**.
 
-Autonomous Market Intelligence Platform is a LangGraph-based multi-agent AI system that performs market research, competitor analysis, trend discovery, strategic planning, content generation, and PDF reporting.
+The platform autonomously performs market research, competitor analysis, trend discovery, business strategy generation, campaign content creation, PDF/JSON report generation, and exposes the complete workflow through both a **Streamlit UI** and **FastAPI REST API**.
 
-The system uses specialized AI agents working together to generate actionable business insights and marketing campaigns from a simple industry and business goal input.
+---
 
-3. Features
-## Features
+# What's New (Latest Version)
 
-- Multi-Agent Architecture using LangGraph
-- Market Research Agent
-- Competitor Analysis Agent
-- Industry Trend Analysis Agent
-- Strategy Generation Agent
-- Human-in-the-Loop Approval
-- Marketing Content Generation
-- PDF Report Export
-- Campaign PDF Export
-- Memory Persistence using MemorySaver
-- Tavily Web Search Integration
-- Streamlit User Interface
+Compared to the previous version, this project now includes:
 
-4. Tech Stack
-## Tech Stack
+* FastAPI REST API integration
+* Docker support
+* JSON report export
+* Agent execution time tracking
+* Token usage tracking
+* AI cost estimation
+* Improved competitor analysis
+* Improved trend summaries
+* Official competitor websites
+* Research timestamps
+* Better PDF reporting
+* Dynamic LangGraph thread IDs
+* Production-ready project structure
 
-- Python
-- LangGraph
-- LangChain
-- Gemini
-- Tavily Search
-- Streamlit
-- Pydantic
-- ReportLab
+---
 
-5. Workflow
-## Workflow
+# Features
 
-1. User enters Industry and Goal.
-2. Market Agent performs market research.
-3. Competitor Agent analyzes competitors.
-4. Trend Agent identifies latest industry trends.
-5. Strategy Agent generates business strategy.
-6. User approves strategy.
-7. Content Agent generates:
-   - LinkedIn Post
-   - Marketing Email
-   - Google Ad Copy
-8. PDF reports are generated.
-9. User downloads reports.
-    
-6. Installation
-## Installation
+### AI Multi-Agent Workflow
 
+* Market Research Agent
+* Competitor Analysis Agent
+* Industry Trend Agent
+* Strategy Generation Agent
+* Human Approval Layer
+* Campaign Content Agent
+
+### Reporting
+
+* Professional PDF Market Report
+* Campaign PDF Report
+* JSON Export
+* Research Sources
+* Research Timestamps
+
+### AI Monitoring
+
+* Execution Time per Agent
+* Token Usage per Agent
+* Estimated Gemini Cost
+* Workflow Metrics
+
+### Backend
+
+* FastAPI REST API
+* Streamlit Frontend
+* Docker Ready
+* Memory Persistence using LangGraph MemorySaver
+
+---
+
+# API Documentation
+
+After running FastAPI:
+
+http://127.0.0.1:8000/docs
+
+Swagger automatically provides interactive API testing.
+
+Endpoints
+
+POST /generate
+
+Generate complete market intelligence report.
+
+POST /generate-content
+
+Generate campaign content from approved strategy.
+
+---
+
+# Workflow
+
+User
+
+↓
+
+Streamlit UI / FastAPI
+
+↓
+
+LangGraph StateGraph
+
+↓
+
+Market Agent
+
+↓
+
+Competitor Agent + Trend Agent (Parallel)
+
+↓
+
+Strategy Agent
+
+↓
+
+Human Approval
+
+↓
+
+Content Agent
+
+↓
+
+PDF + JSON Export
+
+---
+
+# Technology Architecture
+
+User
+
+↓
+
+Streamlit UI
+
+↓
+
+FastAPI
+
+↓
+
+LangGraph
+
+├── StateGraph
+
+├── MemorySaver
+
+├── Router
+
+└── Multi-Agent System
+
+↓
+
+Gemini 2.5 Flash
+
+↓
+
+Pydantic Structured Outputs
+
+↓
+
+Tavily Search API
+
+---
+
+# Folder Structure
+
+```text
+autonomous-market-intelligence
+
+│
+
+├── app
+
+│ ├── agents
+
+│ ├── api
+
+│ ├── graph
+
+│ ├── prompts
+
+│ ├── schemas
+
+│ ├── tools
+
+│ ├── utils
+
+│ ├── report_pdf_generator.py
+
+│ ├── campaign_pdf_generator.py
+
+│ ├── json_export.py
+
+│ ├── llm.py
+
+│ └── memory.py
+
+│
+
+├── ui.py
+
+├── main.py
+
+├── Dockerfile
+
+├── requirements.txt
+
+└── README.md
+```
+
+---
+
+# Tech Stack
+
+### AI
+
+* LangGraph
+* LangChain
+* Gemini 2.5 Flash
+* Tavily Search
+
+### Backend
+
+* FastAPI
+* Pydantic
+
+### Frontend
+
+* Streamlit
+
+### Reporting
+
+* ReportLab
+* JSON Export
+
+### Deployment
+
+* Docker
+
+---
+
+# Installation
+
+```bash
 git clone <repository-url>
 
 cd autonomous-market-intelligence
 
 pip install -r requirements.txt
+```
 
-7. Environment Variables
-## Environment Variables
+---
 
-Create a .env file and add:
+# Environment Variables
 
-GOOGLE_API_KEY=your_key
-TAVILY_API_KEY=your_key
+Create a .env file
 
-8. Run Application
-## Run Application
+```text
+GOOGLE_API_KEY=YOUR_API_KEY
 
+TAVILY_API_KEY=YOUR_API_KEY
+```
+
+---
+
+# Run Streamlit
+
+```bash
 streamlit run ui.py
+```
 
+---
+
+# Run FastAPI
+
+```bash
+uvicorn app.api.api:app --reload
+```
+
+---
+
+# Docker
+
+Build
+
+```bash
+docker build -t market-intelligence .
+```
+
+Run
+
+```bash
+docker run -p 8501:8501 market-intelligence
+```
+
+---
+
+# Output
+
+The platform generates
+
+* Market Intelligence Report
+* Competitor Analysis
+* Industry Trend Analysis
+* Business Strategy
+* LinkedIn Post
+* Marketing Email
+* Google Ad Copy
+* Professional PDF Reports
+* JSON Report
+* API Response
+
+---
+
+# Future Improvements
+
+* Authentication
+* Database Integration
+* Dashboard Analytics
+* Multi-user Sessions
+* Cloud Deployment
+* CI/CD Pipeline
+* Live Monitoring
+* Kubernetes Deployment
